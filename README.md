@@ -19,30 +19,25 @@ This package contains a complete agent-based modeling simulation of the Telephon
 
 ### Installation Steps
 
-1. **Extract the package**
-   ```bash
-   unzip telephone_game_simulation.zip
-   cd telephone_game_app
-   ```
 
-2. **Create a virtual environment**
+1. **Create a virtual environment**
    ```bash
    python3 -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
-3. **Install dependencies**
+2. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Run the web application**
+3. **Run the web application**
    ```bash
    cd src
    python main.py
    ```
 
-5. **Access the simulation**
+4. **Access the simulation**
    Open your browser and go to: `http://localhost:5001`
 
 ## Command Line Usage
