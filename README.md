@@ -15,40 +15,7 @@ This package contains a complete agent-based modeling simulation of the Telephon
 
 ### Prerequisites
 - Python 3.8 or higher
-- pip (Python package installer)
 
-### Installation Steps
-
-
-1. **Create a virtual environment**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run the web application**
-   ```bash
-   cd src
-   python main.py
-   ```
-
-4. **Access the simulation**
-   Open your browser and go to: `http://localhost:5001`
-
-## Command Line Usage
-
-To run the simulation from the command line:
-
-```bash
-python main.py
-```
-
-This will run a simulation with 10,000 agents for 100 timesteps and save the results.
 
 ## Simulation Parameters
 
