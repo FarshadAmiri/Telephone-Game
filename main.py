@@ -1,7 +1,6 @@
 from simulation import Simulation
+from params import NUM_AGENTS, NUM_TIMESTEPS
 
-NUM_AGENTS = 10000
-NUM_TIMESTEPS = 100
 
 def main():
     simulation = Simulation(NUM_AGENTS)
@@ -31,7 +30,9 @@ def main():
     # After simulation, you can analyze trust_scores_over_time
     # For example, plot it to see the trend.
     print("Simulation finished.")
-    print("Average trust scores over time:", trust_scores_over_time)
+    
+    rounded_trust_scores_over_time = [round(score, 4) for score in trust_scores_over_time]
+    print(f"Average trust scores over time: {rounded_trust_scores_over_time}")
 
     with open("trust_scores.txt", "w") as f:
         for score in trust_scores_over_time:

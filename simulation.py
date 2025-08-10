@@ -1,6 +1,7 @@
 import random
 import string
 import numpy as np
+from params import TRUST_DISTRIBUTION, TRUST_PARAMS
 
 class Agent:
     def __init__(self, agent_id):
@@ -70,10 +71,51 @@ class Agent:
 class Simulation:
     def __init__(self, num_agents):
         self.agents = [Agent(i) for i in range(num_agents)]
-        self.global_trust_scores = {i: 0.5 for i in range(num_agents)} # Centralized trust scores
+        self.global_trust_scores = self._initialize_trust_scores(num_agents)
         self.current_input = ""
         self.final_output = ""
         self.timesteps = 0
+
+    def _initialize_trust_scores(self, num_agents):
+        scores = {}
+        dist = TRUST_DISTRIBUTION.lower()
+        params = TRUST_PARAMS.get(dist, {})
+
+        if dist == "uniform":
+            val = params.get("value", 0.5)
+            scores = {i: val for i in range(num_agents)}
+
+        elif dist == "normal":
+            mu = params.get("mu", 0.5)
+            sigma = params.get("sigma", 0.1)
+            raw_scores = np.random.normal(mu, sigma, num_agents)
+            scores = {i: float(np.clip(s, 0, 1)) for i, s in enumerate(raw_scores)}
+
+        elif dist == "gamma":
+            shape = params.get("shape", 2.0)
+            scale = params.get("scale", 0.2)
+            raw_scores = np.random.gamma(shape, scale, num_agents)
+            # Normalize to [0,1] if needed
+            max_val = max(raw_scores)
+            scores = {i: float(s / max_val) for i, s in enumerate(raw_scores)}
+
+        elif dist == "gamma-inverted":
+            shape = params.get("shape", 2.0)
+            scale = params.get("scale", 0.2)
+            raw_scores = np.random.gamma(shape, scale, num_agents)
+            max_val = max(raw_scores)
+            normalized = np.array([s / max_val for s in raw_scores])
+            scores = {i: float(1 - val) for i, val in enumerate(normalized)}
+
+        elif dist == "bounded":
+            min_val = params.get("min", 0.3)
+            max_val = params.get("max", 0.8)
+            scores = {i: random.uniform(min_val, max_val) for i in range(num_agents)}
+
+        else:
+            raise ValueError(f"Unknown trust distribution: {dist}")
+
+        return scores
 
     def generate_input(self, length=6):
         return ''.join(random.choice(string.ascii_lowercase) for _ in range(length))
