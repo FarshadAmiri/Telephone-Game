@@ -1,4 +1,4 @@
-NUM_AGENTS = 100
+NUM_AGENTS = 1000
 NUM_TIMESTEPS = 100
 
 # Trust score distribution configuration
