@@ -114,6 +114,8 @@ class Simulation:
 
         else:
             raise ValueError(f"Unknown trust distribution: {dist}")
+        
+        scores = {i: float(np.clip(s, 0, 1)) for i, s in scores.items()}
 
         return scores
 

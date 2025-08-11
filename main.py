@@ -1,5 +1,7 @@
 from simulation import Simulation
 from params import NUM_AGENTS, NUM_TIMESTEPS
+from utils import live_plot_trust_distribution
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -27,17 +29,24 @@ def main():
 
         print(f"Timestep {t+1}: Average Trust = {trust_scores_over_time[-1]:.4f}")
 
+        live_plot_trust_distribution(simulation, timestep=t+1, avg_trust=avg_trust)
+
     # After simulation, you can analyze trust_scores_over_time
     # For example, plot it to see the trend.
     print("Simulation finished.")
     
-    rounded_trust_scores_over_time = [round(score, 4) for score in trust_scores_over_time]
-    print(f"Average trust scores over time: {rounded_trust_scores_over_time}")
+    # rounded_trust_scores_over_time = [round(score, 4) for score in trust_scores_over_time]
+    # print(f"Average trust scores over time: {rounded_trust_scores_over_time}")
 
     with open("trust_scores.txt", "w") as f:
         for score in trust_scores_over_time:
             f.write(f"{score}\n")
     print("Trust scores saved to trust_scores.txt")
+
+    plt.ioff()
+    plt.show()
+
+
 if __name__ == "__main__":
     main()
 
