@@ -1,11 +1,19 @@
 from simulation import Simulation
 from params import NUM_AGENTS, NUM_TIMESTEPS
-from utils import live_plot_trust_distribution
+from plots import plot_initial_trust_scores, plot_avg_trust_scores, plot_last_vs_initial_trust_dists
+from utils import live_plot_trust_distribution 
 import matplotlib.pyplot as plt
-
+import json
+import os
 
 def main():
+    os.makedirs("results", exist_ok=True)
+
     simulation = Simulation(NUM_AGENTS)
+
+    # Save initial trust scores before simulation starts
+    with open(r"results\trust_scores_initial.json", "w") as f:
+        json.dump(simulation.global_trust_scores, f)
 
     # Store trust scores over time for analysis
     trust_scores_over_time = []
@@ -13,11 +21,7 @@ def main():
     for t in range(NUM_TIMESTEPS):
         simulation.run_timestep()
 
-        # Collect average trust score at each timestep
-        # This requires iterating through all agents and their trust dictionaries
-        # For simplicity, let\'s calculate the average of all trust scores across all agents
-        # This might be computationally intensive for 10,000 agents and 100 timesteps.
-        # We might need to optimize this later if performance is an issue.
+        # Calculate average trust score
         total_trust = sum(simulation.global_trust_scores.values())
         num_trust_relationships = len(simulation.global_trust_scores)
         
@@ -25,29 +29,30 @@ def main():
             avg_trust = total_trust / num_trust_relationships
             trust_scores_over_time.append(avg_trust)
         else:
-            trust_scores_over_time.append(0.5) # Default if no trust relationships yet
+            trust_scores_over_time.append(0.5)  # Default if no trust relationships yet
 
         print(f"Timestep {t+1}: Average Trust = {trust_scores_over_time[-1]:.4f}")
 
+        # Live plot
         live_plot_trust_distribution(simulation, timestep=t+1, avg_trust=avg_trust)
 
-    # After simulation, you can analyze trust_scores_over_time
-    # For example, plot it to see the trend.
-    print("Simulation finished.")
-    
-    # rounded_trust_scores_over_time = [round(score, 4) for score in trust_scores_over_time]
-    # print(f"Average trust scores over time: {rounded_trust_scores_over_time}")
+    # Save final trust scores
+    with open(r"results\trust_scores_final.json", "w") as f:
+        json.dump(simulation.global_trust_scores, f)
 
-    with open("trust_scores.txt", "w") as f:
+    # Save trust score trend
+    with open(r"results\trust_scores_over_time.txt", "w") as f:
         for score in trust_scores_over_time:
             f.write(f"{score}\n")
-    print("Trust scores saved to trust_scores.txt")
+
+    print("Initial and final trust scores saved to 'results' folder.")
+    print("Trend of trust scores saved to 'trust_scores_over_time.txt'.")
 
     plt.ioff()
     plt.show()
 
-
 if __name__ == "__main__":
     main()
-
-
+    plot_initial_trust_scores()
+    plot_avg_trust_scores()
+    plot_last_vs_initial_trust_dists()
