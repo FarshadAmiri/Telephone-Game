@@ -35,9 +35,3 @@ The simulation typically shows one of three patterns:
 1. **Trust Decline**: Trust decreases over time as agents observe message distortion
 2. **Trust Increase**: Trust increases as agents prove reliable
 3. **Trust Stabilization**: Trust reaches an equilibrium
-
-
-## License and Citation
-
-This simulation is provided for educational and research purposes. If you use this code in academic work, please cite appropriately.
-
