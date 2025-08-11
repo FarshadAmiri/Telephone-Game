@@ -47,7 +47,7 @@ def generate_trust_scores(num_agents):
 
     return scores
 
-def plot_initial_trust_scores():
+def plot_initial_trust_scores(show=True):
     initial_trust_scores = generate_trust_scores(NUM_AGENTS)
     plt.figure(figsize=(8, 5))
     plt.hist(initial_trust_scores, bins=30, color='skyblue', edgecolor='black')
@@ -59,7 +59,8 @@ def plot_initial_trust_scores():
     plt.tight_layout()
     plt.savefig(r"results\initial_trust_dist.png")
     print("Saved distribution plot as trust_scores_distribution.png in result folder")
-    plt.show()
+    if show:
+        plt.show()
 
 
 #---------------------------------------
@@ -68,7 +69,7 @@ def plot_initial_trust_scores():
 
 # Read trust scores from file
 
-def plot_avg_trust_scores():
+def plot_avg_trust_scores(show=True):
     avg_trust_scores = []
     with open(r"results\trust_scores_over_time.txt", "r") as f:
         for line in f:
@@ -83,7 +84,8 @@ def plot_avg_trust_scores():
     plt.grid(True)
     plt.savefig(r"results\avg_trust_over_iterations.png")
     print("Plot saved to average_trust_score.png")
-    plt.show()
+    if show:
+        plt.show()
 
 
 
@@ -91,7 +93,7 @@ def plot_avg_trust_scores():
 # 3. Plot Last vs Initial Trust Distribution
 #--------------------------------------------
 
-def plot_last_vs_initial_trust_dists():
+def plot_last_vs_initial_trust_dists(show=True):
     # Load initial trust scores from file
     with open(r"results\trust_scores_initial.json", "r") as f:
         initial_scores_dict = json.load(f)
@@ -115,7 +117,8 @@ def plot_last_vs_initial_trust_dists():
     plt.tight_layout()
 
     plt.savefig(r"results\last_vs_initial_trust_dist.png")
-    plt.show()
+    if show:
+        plt.show()
 
 
 

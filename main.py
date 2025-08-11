@@ -1,6 +1,6 @@
 from simulation import Simulation
 from params import NUM_AGENTS, NUM_TIMESTEPS
-from plots import plot_initial_trust_scores, plot_avg_trust_scores, plot_last_vs_initial_trust_dists
+from plotting import plot_initial_trust_scores, plot_avg_trust_scores, plot_last_vs_initial_trust_dists
 from utils import live_plot_trust_distribution 
 import matplotlib.pyplot as plt
 import json

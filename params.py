@@ -1,5 +1,5 @@
 NUM_AGENTS = 1000
-NUM_TIMESTEPS = 100
+NUM_TIMESTEPS = 200
 
 # Trust score distribution configuration
 TRUST_DISTRIBUTION = "normal"  # options: "uniform", "normal", "gamma", "gamma-inverted", "bounded"
@@ -12,3 +12,5 @@ TRUST_PARAMS = {
     "gamma-inverted": {"shape": 3, "scale": 1},   # k (shape), θ (scale) | # skewed to right
     "bounded": {"min": 0.3, "max": 0.8}      # min and max bounds
 }
+
+LEARNING_RATE = 0.01

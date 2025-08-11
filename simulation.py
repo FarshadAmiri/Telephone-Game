@@ -1,7 +1,7 @@
 import random
 import string
 import numpy as np
-from params import TRUST_DISTRIBUTION, TRUST_PARAMS
+from params import TRUST_DISTRIBUTION, TRUST_PARAMS, LEARNING_RATE
 
 class Agent:
     def __init__(self, agent_id):
@@ -144,7 +144,7 @@ class Simulation:
             deviation_from_original = string_distance(self.current_input, own_output)
             reliability_score = 1.0 - (deviation_from_original / 6.0) # Max deviation is 6
 
-            learning_rate = 0.05
+            learning_rate = LEARNING_RATE
             current_global_trust = self.global_trust_scores.get(agent.agent_id, 0.5)
             new_global_trust = current_global_trust + learning_rate * (reliability_score - current_global_trust)
             self.global_trust_scores[agent.agent_id] = max(0.0, min(1.0, new_global_trust))
